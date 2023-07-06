@@ -1,5 +1,6 @@
 import time
 import pyautogui
+from ctypes import WinDLL
 from os import getenv
 from dotenv import load_dotenv
 
@@ -13,6 +14,10 @@ time.sleep(2)
 def pressKey(keyToPress, numOfPresses = 1):
     for _ in range(numOfPresses):
         pyautogui.press(keyToPress)
+
+# Disabling caps lock if its enabled
+if WinDLL("User32.dll").GetKeyState(0x14) == 1:
+    pyautogui.press("capslock")
 
 # First name
 pressKey("tab")
@@ -64,7 +69,7 @@ pressKey("right")
 
 # Address
 pressKey("tab")
-pyautogui.write('100 Cavendish Dr\nLondon E11 1DL', interval = TYPING_SPEED)
+pyautogui.write(getenv('ADDRESS'), interval = TYPING_SPEED)
 
 # City
 pressKey("tab")
@@ -76,7 +81,7 @@ pyautogui.write('E11 1DL', interval = TYPING_SPEED)
 
 # Phone number
 pressKey("tab")
-pyautogui.write('07760782072', interval = TYPING_SPEED)
+pyautogui.write(getenv('PHONE_NUMBER'), interval = TYPING_SPEED)
 
 # Have you worked at Pret before?
 pressKey("tab")
